@@ -16,15 +16,13 @@ class Instruction (command: String) {
     }
 
     fun execute(robot: Robot) : Robot {
-        return commands.map{ moveToNewLocation(it, robot)}.reduce{ _, b -> b }
-    }
+        return commands
+                .map{
+                    if(it == "M") return@map robot.walk()
 
-    private inline fun moveToNewLocation(cmd: String, robot: Robot): Robot {
-        if(cmd == "M") {
-            return robot.walk()
-        }
-
-        var direction= Direction.extract(cmd) ?: throw InvalidCommand(cmd)
-        return robot.turn(direction)
+                    var direction = Direction.extract(it)?: throw InvalidCommand(it)
+                    return return@map robot.turn(direction)
+                }
+                .reduce{ _, b -> b }
     }
 }

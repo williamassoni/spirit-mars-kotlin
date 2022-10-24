@@ -15,7 +15,7 @@ class Robot(val location: Location, var orientation: Orientation = Orientation.N
     fun walk(): Robot {
         this.location.move(this.orientation)
 
-        if(!this.location.isValidLocation()){
+        if(!this.location.isValidLocation()) {
             throw InvalidLocation(lat=location.latitude, long=location.longitude)
         }
 
